@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def subject_list(request):
+    return render(request, 'subjects/list.html')
