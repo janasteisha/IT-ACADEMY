@@ -6,6 +6,19 @@
 </head>
 <body>
     <h1>Мои предметы</h1>
-    <p>Здесь будет список предметов</p>
+    
+    <p><a href="/questions/import/">📥 Импортировать вопросы</a></p>
+    
+    {% if subjects %}
+        <ul>
+        {% for subject in subjects %}
+            <li>
+                <a href="/subjects/{{ subject.id }}/">{{ subject.name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет ни одного предмета. <a href="/admin">Добавьте через админку</a></p>
+    {% endif %}
 </body>
 </html>

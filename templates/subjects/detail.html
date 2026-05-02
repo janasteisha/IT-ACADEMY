@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ subject.name }}</title>
+</head>
+<body>
+    <h1>{{ subject.name }}</h1>
+    
+    <a href="/">← На главную</a>
+    
+    <h2>Вопросы:</h2>
+    
+    {% if questions %}
+        <ul>
+        {% for question in questions %}
+            <li>
+                <strong>{{ question.text }}</strong><br>
+                <em>Ответ: {{ question.answer }}</em>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет вопросов. <a href="/questions/import/">Импортируйте вопросы</a></p>
+    {% endif %}
+</body>
+</html>

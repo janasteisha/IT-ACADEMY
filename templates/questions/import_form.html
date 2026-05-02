@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Импорт вопросов</title>
+</head>
+<body>
+    <h1>Импорт вопросов</h1>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label>Предмет:</label>
+        <select name="subject">
+            {% for s in subjects %}
+                <option value="{{ s.id }}">{{ s.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <br><br>
+        
+        <label>Файл (CSV, формат: вопрос;ответ):</label>
+        <input type="file" name="file" accept=".csv,.txt">
+        
+        <br><br>
+        
+        <button type="submit">Импортировать</button>
+    </form>
+    
+    <p><a href="/">← На главную</a></p>
+</body>
+</html>
