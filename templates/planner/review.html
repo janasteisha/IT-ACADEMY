@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Повторение на сегодня</title>
+</head>
+<body>
+    <h1>Повторение на сегодня ({{ today }})</h1>
+    <a href="/">← На главную</a>
+    
+    {% if plans %}
+        <p>Осталось повторить: {{ plans|length }}</p>
+        
+        {% for plan in plans %}
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+                <h3>{{ plan.question.text }}</h3>
+                <p><strong>Ответ:</strong> {{ plan.question.answer }}</p>
+                <p>Интервал: {{ plan.interval_days }} дн. | Повторений: {{ plan.repetitions }}</p>
+                
+                <form method="POST" action="/review/{{ plan.id }}/rate/">
+                    {% csrf_token %}
+                    <button name="quality" value="1">😰 Сложно</button>
+                    <button name="quality" value="3">😐 Нормально</button>
+                    <button name="quality" value="5">😊 Легко</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Нет вопросов на сегодня! 🎉</p>
+        <p><a href="/questions/import/">Импортировать новые вопросы</a></p>
+    {% endif %}
+</body>
+</html>

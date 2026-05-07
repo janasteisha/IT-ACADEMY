@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('subjects/', include('subjects.urls')),
     path('questions/', include('questions.urls')),
+    path('review/', include('planner.urls')),
     path('', include('subjects.urls')),
 ]

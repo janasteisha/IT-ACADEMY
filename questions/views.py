@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Question
 from subjects.models import Subject
+from planner.models import RepetitionPlan
+from django.utils import timezone
 
 def import_questions(request):
     subjects = Subject.objects.all()
@@ -16,10 +18,18 @@ def import_questions(request):
         for line in lines:
             parts = line.split(';')
             if len(parts) >= 2:
-                Question.objects.create(
+                question = Question.objects.create(
                     subject_id=subject_id,
                     text=parts[0].strip(),
                     answer=parts[1].strip()
+                )
+                # Автоматически создаём план повторений для каждого вопроса
+                RepetitionPlan.objects.create(
+                    question=question,
+                    next_review_date=timezone.now().date(),
+                    interval_days=1,
+                    easiness_factor=2.5,
+                    repetitions=0
                 )
                 count += 1
         
