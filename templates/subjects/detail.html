@@ -17,11 +17,31 @@
             <li>
                 <strong>{{ question.text }}</strong><br>
                 <em>Ответ: {{ question.answer }}</em>
+                <br>
+                <button onclick="generateAI('{{ question.id }}')">🤖 Сгенерировать AI-ответ</button>
+                <pre id="ai-result-{{ question.id }}" style="background:#f5f5f5; padding:10px; margin-top:5px;"></pre>
             </li>
+            <hr>
         {% endfor %}
         </ul>
     {% else %}
         <p>Нет вопросов. <a href="/questions/import/">Импортируйте вопросы</a></p>
     {% endif %}
+
+    <script>
+    function generateAI(questionId) {
+        const result = document.getElementById('ai-result-' + questionId);
+        result.textContent = '⏳ Генерирую ответ...';
+        
+        fetch('/questions/' + questionId + '/ai/')
+            .then(response => response.json())
+            .then(data => {
+                result.textContent = '🤖 AI-ответ:\n\n' + data.ai_answer;
+            })
+            .catch(error => {
+                result.textContent = '❌ Ошибка: ' + error;
+            });
+    }
+    </script>
 </body>
 </html>

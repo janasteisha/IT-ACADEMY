@@ -41,3 +41,17 @@ def import_questions(request):
     return render(request, 'questions/import_form.html', {
         'subjects': subjects
     })
+
+
+from django.http import JsonResponse
+from app.ai_agent.services import AIAgent
+
+def generate_ai_answer(request, question_id):
+    question = Question.objects.get(id=question_id)
+    agent = AIAgent()
+    ai_answer = agent.generate_answer(question.text, question.subject.name)
+    return JsonResponse({
+        'question': question.text,
+        'correct_answer': question.answer,
+        'ai_answer': ai_answer
+    })
