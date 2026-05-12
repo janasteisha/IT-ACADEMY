@@ -16,11 +16,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Question',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField(verbose_name='Текст вопроса')),
-                ('answer', models.TextField(verbose_name='Правильный ответ')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
-                ('subject', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='subjects.subject', verbose_name='Предмет')),
+                ('id',
+                 models.BigAutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('text',
+                 models.TextField(
+                     verbose_name='Текст вопроса')),
+                ('answer',
+                 models.TextField(
+                     verbose_name='Правильный ответ')),
+                ('created_at',
+                 models.DateTimeField(
+                     auto_now_add=True,
+                     verbose_name='Дата создания')),
+                ('subject',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='questions',
+                     to='subjects.subject',
+                     verbose_name='Предмет')),
             ],
             options={
                 'verbose_name': 'Вопрос',

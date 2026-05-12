@@ -17,15 +17,31 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Subject',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, verbose_name='Название')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subjects', to=settings.AUTH_USER_MODEL, verbose_name='Владелец')),
+                ('id',
+                 models.BigAutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('name',
+                 models.CharField(
+                     max_length=100,
+                     verbose_name='Название')),
+                ('created_at',
+                 models.DateTimeField(
+                     auto_now_add=True,
+                     verbose_name='Дата создания')),
+                ('user',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='subjects',
+                     to=settings.AUTH_USER_MODEL,
+                     verbose_name='Владелец')),
             ],
             options={
                 'verbose_name': 'Предмет',
                 'verbose_name_plural': 'Предметы',
-                'ordering': ['-created_at'],
+                                'ordering': ['-created_at'],
             },
         ),
     ]

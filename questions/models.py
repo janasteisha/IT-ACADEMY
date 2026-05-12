@@ -11,7 +11,8 @@ class Question(models.Model):
     )
     text = models.TextField(verbose_name='Текст вопроса')
     answer = models.TextField(verbose_name='Правильный ответ')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name='Дата создания')
 
     class Meta:
         verbose_name = 'Вопрос'

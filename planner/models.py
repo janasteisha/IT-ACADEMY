@@ -9,10 +9,14 @@ class RepetitionPlan(models.Model):
         related_name='plan',
         verbose_name='Вопрос'
     )
-    next_review_date = models.DateField(verbose_name='Дата следующего повторения')
-    interval_days = models.IntegerField(default=1, verbose_name='Интервал (дни)')
-    easiness_factor = models.FloatField(default=2.5, verbose_name='Коэффициент лёгкости')
-    repetitions = models.IntegerField(default=0, verbose_name='Количество повторений')
+    next_review_date = models.DateField(
+        verbose_name='Дата следующего повторения')
+    interval_days = models.IntegerField(
+        default=1, verbose_name='Интервал (дни)')
+    easiness_factor = models.FloatField(
+        default=2.5, verbose_name='Коэффициент лёгкости')
+    repetitions = models.IntegerField(
+        default=0, verbose_name='Количество повторений')
 
     class Meta:
         verbose_name = 'План повторения'

@@ -16,12 +16,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RepetitionPlan',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('next_review_date', models.DateField(verbose_name='Дата следующего повторения')),
-                ('interval_days', models.IntegerField(default=1, verbose_name='Интервал (дни)')),
-                ('easiness_factor', models.FloatField(default=2.5, verbose_name='Коэффициент лёгкости')),
-                ('repetitions', models.IntegerField(default=0, verbose_name='Количество повторений')),
-                ('question', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='plan', to='questions.question', verbose_name='Вопрос')),
+                ('id',
+                 models.BigAutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('next_review_date',
+                 models.DateField(
+                     verbose_name='Дата следующего повторения')),
+                ('interval_days',
+                 models.IntegerField(
+                     default=1,
+                     verbose_name='Интервал (дни)')),
+                ('easiness_factor',
+                 models.FloatField(
+                     default=2.5,
+                     verbose_name='Коэффициент лёгкости')),
+                ('repetitions',
+                 models.IntegerField(
+                     default=0,
+                     verbose_name='Количество повторений')),
+                ('question',
+                 models.OneToOneField(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='plan',
+                     to='questions.question',
+                     verbose_name='Вопрос')),
             ],
             options={
                 'verbose_name': 'План повторения',
