@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Результат импорта</title>
-</head>
-<body>
-    <h1>Импорт завершён!</h1>
-    <p>Загружено вопросов: {{ count }}</p>
-    <a href="/questions/import/">Загрузить ещё</a>
-    <a href="/">← На главную</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>Импорт <span>завершён</span></h1>
+        <p>Загружено <strong style="color: var(--accent-light);">{{ count }}</strong> вопросов.</p>
+    </div>
+</section>
+
+<section style="margin-top: 40px; display: flex; gap: 20px;">
+    <a href="/questions/import/" class="upload-btn">Загрузить ещё</a>
+    <a href="/" class="upload-btn" style="background: transparent; border: 1px solid rgba(192,132,252,0.3); box-shadow: none;">← На главную</a>
+</section>
+{% endblock %}

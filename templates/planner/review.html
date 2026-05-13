@@ -1,33 +1,72 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Повторение на сегодня</title>
-</head>
-<body>
-    <h1>Повторение на сегодня ({{ today }})</h1>
-    <a href="/">← На главную</a>
-    
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>План <span>повторений</span></h1>
+        <p>Вопросы для повторения на сегодня ({{ today }}).</p>
+    </div>
+</section>
+
+<section style="margin-top: 40px; padding-bottom: 80px;">
     {% if plans %}
-        <p>Осталось повторить: {{ plans|length }}</p>
+        <p style="color: var(--muted); font-size: 15px; margin-bottom: 24px;">Осталось повторить: <strong style="color: var(--accent-light);">{{ plans|length }}</strong></p>
         
         {% for plan in plans %}
-            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
-                <h3>{{ plan.question.text }}</h3>
-                <p><strong>Ответ:</strong> {{ plan.question.answer }}</p>
-                <p>Интервал: {{ plan.interval_days }} дн. | Повторений: {{ plan.repetitions }}</p>
-                
-                <form method="POST" action="/review/{{ plan.id }}/rate/">
-                    {% csrf_token %}
-                    <button name="quality" value="1">😰 Сложно</button>
-                    <button name="quality" value="3">😐 Нормально</button>
-                    <button name="quality" value="5">😊 Легко</button>
-                </form>
+        <div style="
+            background: var(--card);
+            border: 1px solid rgba(192,132,252,0.22);
+            border-radius: 24px;
+            padding: 34px;
+            margin-bottom: 24px;
+        ">
+            <h2 style="font-size: 24px; margin-bottom: 16px; font-weight: 500;">{{ plan.question.text }}</h2>
+            
+            <details style="margin-bottom: 24px;">
+                <summary style="color: var(--muted); cursor: pointer; font-size: 15px;">Показать ответ</summary>
+                <p style="color: var(--accent-light); margin-top: 12px; font-size: 16px;">{{ plan.question.answer }}</p>
+            </details>
+            
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; color: var(--muted); font-size: 14px;">
+                <span>Интервал: {{ plan.interval_days }} дн.</span>
+                <span style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-light);"></span>
+                <span>Повторений: {{ plan.repetitions }}</span>
             </div>
+            
+            <form method="POST" action="/review/{{ plan.id }}/rate/" style="display: flex; gap: 12px;">
+                {% csrf_token %}
+                <button name="quality" value="1" style="
+                    flex: 1; border: none; cursor: pointer; color: white;
+                    font-family: inherit; font-size: 15px; font-weight: 500;
+                    padding: 16px; border-radius: 14px;
+                    background: rgba(239,68,68,0.2);
+                    border: 1px solid rgba(239,68,68,0.3);
+                    transition: 0.3s;
+                ">Сложно</button>
+                <button name="quality" value="3" style="
+                    flex: 1; border: none; cursor: pointer; color: white;
+                    font-family: inherit; font-size: 15px; font-weight: 500;
+                    padding: 16px; border-radius: 14px;
+                    background: rgba(124,58,237,0.2);
+                    border: 1px solid rgba(124,58,237,0.3);
+                    transition: 0.3s;
+                ">Нормально</button>
+                <button name="quality" value="5" style="
+                    flex: 1; border: none; cursor: pointer; color: white;
+                    font-family: inherit; font-size: 15px; font-weight: 500;
+                    padding: 16px; border-radius: 14px;
+                    background: linear-gradient(135deg, #7C3AED, #A855F7);
+                    box-shadow: 0 10px 30px rgba(124,58,237,0.3);
+                    transition: 0.35s;
+                ">Легко</button>
+            </form>
+        </div>
         {% endfor %}
     {% else %}
-        <p>Нет вопросов на сегодня! 🎉</p>
-        <p><a href="/questions/import/">Импортировать новые вопросы</a></p>
+        <div style="text-align: center; padding: 80px 0;">
+            <p style="font-size: 24px; color: var(--accent-light); margin-bottom: 16px;">Вопросов на сегодня нет!</p>
+            <p style="color: var(--muted);"><a href="/questions/import/" style="color: var(--accent-light);">Загрузите новые вопросы</a></p>
+        </div>
     {% endif %}
-</body>
-</html>
+</section>
+{% endblock %}

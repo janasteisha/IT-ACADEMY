@@ -1,47 +1,75 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ subject.name }}</title>
-</head>
-<body>
-    <h1>{{ subject.name }}</h1>
-    
-    <a href="/">← На главную</a>
-    
-    <h2>Вопросы:</h2>
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>{{ subject.name }}</h1>
+        <p>{{ subject.questions.count }} вопросов в этом предмете.</p>
+    </div>
+</section>
+
+<section style="margin-top: 40px; padding-bottom: 80px;">
+    <a href="/" style="color: var(--muted); text-decoration: none; font-size: 15px;">← На главную</a>
     
     {% if questions %}
-        <ul>
         {% for question in questions %}
-            <li>
-                <strong>{{ question.text }}</strong><br>
-                <em>Ответ: {{ question.answer }}</em>
-                <br>
-                <button onclick="generateAI('{{ question.id }}')">🤖 Сгенерировать AI-ответ</button>
-                <pre id="ai-result-{{ question.id }}" style="background:#f5f5f5; padding:10px; margin-top:5px;"></pre>
-            </li>
-            <hr>
+        <div style="
+            background: var(--card);
+            border: 1px solid rgba(192,132,252,0.22);
+            border-radius: 24px;
+            padding: 34px;
+            margin-top: 24px;
+        ">
+            <h3 style="font-size: 20px; margin-bottom: 12px; font-weight: 500;">{{ question.text }}</h3>
+            <details>
+                <summary style="color: var(--muted); cursor: pointer; font-size: 15px;">Показать ответ</summary>
+                <p style="color: var(--accent-light); margin-top: 12px; font-size: 16px;">{{ question.answer }}</p>
+            </details>
+            <button onclick="generateAI('{{ question.id }}')" style="
+                margin-top: 16px;
+                border: 1px solid rgba(192,132,252,0.3);
+                background: transparent;
+                color: var(--accent-light);
+                font-family: inherit;
+                font-size: 14px;
+                padding: 10px 20px;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: 0.3s;
+            ">Сгенерировать AI-ответ</button>
+            <pre id="ai-result-{{ question.id }}" style="
+                background: rgba(0,0,0,0.3);
+                border-radius: 14px;
+                padding: 20px;
+                margin-top: 16px;
+                color: var(--muted);
+                font-family: inherit;
+                font-size: 14px;
+                line-height: 1.7;
+                white-space: pre-wrap;
+                display: none;
+            "></pre>
+        </div>
         {% endfor %}
-        </ul>
     {% else %}
-        <p>Нет вопросов. <a href="/questions/import/">Импортируйте вопросы</a></p>
+        <p style="color: var(--muted); margin-top: 40px;">Нет вопросов. <a href="/questions/import/" style="color: var(--accent-light);">Импортируйте вопросы</a></p>
     {% endif %}
+</section>
 
-    <script>
-    function generateAI(questionId) {
-        const result = document.getElementById('ai-result-' + questionId);
-        result.textContent = '⏳ Генерирую ответ...';
-        
-        fetch('/questions/' + questionId + '/ai/')
-            .then(response => response.json())
-            .then(data => {
-                result.textContent = '🤖 AI-ответ:\n\n' + data.ai_answer;
-            })
-            .catch(error => {
-                result.textContent = '❌ Ошибка: ' + error;
-            });
-    }
-    </script>
-</body>
-</html>
+<script>
+function generateAI(questionId) {
+    const result = document.getElementById('ai-result-' + questionId);
+    result.style.display = 'block';
+    result.textContent = 'Генерирую ответ...';
+    
+    fetch('/questions/' + questionId + '/ai/')
+        .then(response => response.json())
+        .then(data => {
+            result.textContent = data.ai_answer;
+        })
+        .catch(error => {
+            result.textContent = 'Ошибка: ' + error;
+        });
+}
+</script>
+{% endblock %}

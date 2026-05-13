@@ -1,32 +1,48 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Импорт вопросов</title>
-</head>
-<body>
-    <h1>Импорт вопросов</h1>
-    
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>Загрузка <span>вопросов</span></h1>
+        <p>Загрузите CSV-файл с вопросами и ответами для любого предмета.</p>
+    </div>
+</section>
+
+<section style="max-width: 600px; margin-top: 40px;">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         
-        <label>Предмет:</label>
-        <select name="subject">
+        <label style="color: var(--muted); font-size: 15px; display: block; margin-bottom: 8px;">Выберите предмет</label>
+        <select name="subject" style="
+            width: 100%;
+            background: var(--card);
+            border: 1px solid rgba(192,132,252,0.22);
+            border-radius: 14px;
+            padding: 16px;
+            color: white;
+            font-family: inherit;
+            font-size: 16px;
+            margin-bottom: 24px;
+            outline: none;
+        ">
             {% for s in subjects %}
                 <option value="{{ s.id }}">{{ s.name }}</option>
             {% endfor %}
         </select>
         
-        <br><br>
+        <label style="color: var(--muted); font-size: 15px; display: block; margin-bottom: 8px;">CSV-файл (формат: вопрос;ответ)</label>
+        <div style="
+            background: var(--card);
+            border: 1px dashed rgba(192,132,252,0.3);
+            border-radius: 14px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 24px;
+        ">
+            <input type="file" name="file" accept=".csv,.txt" style="color: var(--muted);">
+        </div>
         
-        <label>Файл (CSV, формат: вопрос;ответ):</label>
-        <input type="file" name="file" accept=".csv,.txt">
-        
-        <br><br>
-        
-        <button type="submit">Импортировать</button>
+        <button type="submit" class="card-btn" style="width: 100%;">Импортировать вопросы</button>
     </form>
-    
-    <p><a href="/">← На главную</a></p>
-</body>
-</html>
+</section>
+{% endblock %}

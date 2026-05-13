@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Мои предметы</title>
-</head>
-<body>
-    <h1>Мои предметы</h1>
-    
-    <p><a href="/questions/import/">📥 Импортировать вопросы</a></p>
-    
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>Мои <span>предметы</span></h1>
+        <p>Загружайте вопросы по предметам и получайте персональный план повторений на основе интервального алгоритма.</p>
+    </div>
+</section>
+
+<section class="cards">
     {% if subjects %}
-        <ul>
         {% for subject in subjects %}
-            <li>
-                <a href="/subjects/{{ subject.id }}/">{{ subject.name }}</a>
-            </li>
+        <div class="card">
+            <div class="card-icon">
+                {% if 'Python' in subject.name %}
+                    &lt;/&gt;
+                {% elif 'ML' in subject.name or 'Машин' in subject.name %}
+                    ⌘
+                {% elif 'Robot' in subject.name or 'Сенсор' in subject.name %}
+                    ◎
+                {% else %}
+                    &lt;/&gt;
+                {% endif %}
+            </div>
+            <h2>{{ subject.name }}</h2>
+            <div class="questions">{{ subject.questions.count }} вопросов</div>
+            <div class="divider"></div>
+            <p>Подготовка к экзамену по предмету «{{ subject.name }}»</p>
+            <a href="/subjects/{{ subject.id }}/" class="card-btn">Открыть предмет →</a>
+        </div>
         {% endfor %}
-        </ul>
     {% else %}
-        <p>Нет ни одного предмета. <a href="/admin">Добавьте через админку</a></p>
+        <p style="color: var(--muted); font-size: 18px;">Нет ни одного предмета. <a href="/admin" style="color: var(--accent-light);">Добавьте через админку</a></p>
     {% endif %}
-</body>
-</html>
+</section>
+{% endblock %}
